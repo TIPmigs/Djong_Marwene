@@ -1,29 +1,109 @@
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  <!-- Font Awesome for icons -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .product-card {
+            background-color: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: scale(1.03);
+        }
+        .product-card h2 {
+            font-size: 24px;
+            margin: 10px 0;
+            color: #007BFF;
+        }
+        .product-card p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .product-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .product-card .category {
+            font-style: italic;
+            color: #6c757d;
+        }
+        .product-card .tags {
+            margin-top: 10px;
+        }
+        .product-card .tags span {
+            background-color: #f1f1f1;
+            padding: 5px 10px;
+            margin: 3px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #007bff;
+            display: inline-block;
+        }
+        .add-product-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 18px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .add-product-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
     <h1>Product List</h1>
-    <ul>
-        {% for product in products %}
-        <li>{{ product.name }} - ${{ product.price }}</li>
-        {% endfor %}
-    </ul>
 
-    <h2>All Products</h2>
-    <ul>
-        {% for product in products %}
-        <li>{{ product.name }} - ${{ product.price }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_product' %}">add a product</a>
+    {% for product in products %}
+    <div class="product-card">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p class="price"><strong>Price:</strong> ${{ product.price }}</p>
+        <p class="category"><strong>Category:</strong> {{ product.category }}</p>
+        <div class="tags">
+            <strong>Tags:</strong>
+            {% if product.tags %}
+                {% for tag in product.tags|split_by_comma %}
+                    <span>{{ tag }}</span>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                <span>No tags</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
 
-    <h2> Recommended Products</h2>
-    <ul>
-        {% for product in recommendations %}
-            <li>{{ product.name }} - ${{ product.price }}</li>
-        {% endfor %}
-    </ul>
+    <a href="{% url 'add_product' %}" class="add-product-link"><i class="fas fa-plus"></i> Add New Product</a>
+</div>
+
 </body>
-</html> 
+</html>

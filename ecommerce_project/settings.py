@@ -29,7 +29,7 @@ import os
 
 #Environment variables
 SECRET_KEY = os.getenv('zrc-j$i1f6_&fhr@m1og@2p7181d&$37or0j1!rkaf)&#h2mks', "fallback_dev_secret")
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['djong-marwene.onrender.com', 'localhost', '127.0.0.1']
 
 OPENAI_KEY = os.getenv('dcb00909339151b25a4387b3f9ea9068')
@@ -134,3 +134,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+print(GEMINI_API_KEY)
